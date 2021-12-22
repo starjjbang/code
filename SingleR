@@ -1,0 +1,15 @@
+#method 1
+#reference  : https://www.singlecellcourse.org/single-cell-rna-seq-analysis-using-seurat.html
+
+
+sce <- as.SingleCellExperiment(DietSeurat(seurat.obj))
+hpca.main <- SingleR(test = sce,assay.type.test = 1,ref = hpca.se,labels = hpca.se$label.main)
+hpca.fine <- SingleR(test = sce,assay.type.test = 1,ref = hpca.se,labels = hpca.se$label.fine)
+table(hpca.main$pruned.labels)
+table(hpca.fine$pruned.labels)
+seurat.obj@meta.data$hpca.main <- hpca.main$pruned.labels
+seurat.obj@meta.data$hpca.fine <- hpca.fine$pruned.labels
+seurat.obj <- SetIdent(seurat.obj, value = "hpca.fine")
+DimPlot(seurat.obj, group.by='hpca.main',reduction='umap')
+
+
