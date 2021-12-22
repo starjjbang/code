@@ -13,3 +13,22 @@ seurat.obj <- SetIdent(seurat.obj, value = "hpca.fine")
 DimPlot(seurat.obj, group.by='hpca.main',reduction='umap')
 
 
+#method2
+#reference : https://nbisweden.github.io/excelerate-scRNAseq/session-celltypeid/celltypeid.html
+library(celldex)
+hpca.se <- HumanPrimaryCellAtlasData()
+luad.sc <- as.SingleCellExperiment(x = seurat.obj) 
+luad.sc <- logNormCounts(luad.sc)
+pred.hesc <- SingleR(test = luad.sc, ref = hpca.se, labels = hpca.se$label.main)
+seurat.obj <- AddMetaData(object = seurat.obj, metadata = pred.hesc$labels, col.name = "SingleR.labels")
+
+DimPlot(seurat.obj, group.by='SingleR.labels',reduction='umap')
+fn = gsub(".counts.csv","",f_lst[i])
+
+library(cowplot )
+p1 <- DimPlot(seurat.obj, group.by='SingleR.labels', reduction='umap',cells.highlight=findCells(seurat.obj, 'SingleR.labels', 'Epithelial_cells'),
+              cols.highlight = c("#344766"), cols= "#EDE2DB")+ggtitle("")
+p2 <- DimPlot(seurat.obj, split.by='seurat_clusters', group.by='SingleR.labels', reduction='umap',
+        ncol=3,cells.highlight=findCells(seurat.obj, 'SingleR.labels', 'Epithelial_cells'),
+        cols.highlight = c("#344766"), cols= "#EDE2DB")+ ggtitle("")
+plot_grid(p1, p2, ncol=2, labels=c(fn, "Cluster"))
