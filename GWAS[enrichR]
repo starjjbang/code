@@ -1,3 +1,14 @@
+### R Packages
+
+To take advantage of the optimized configuration settings included with this template, you must have the [`renv` package](https://rstudio.github.io/renv/articles/renv.html) installed on your local computer. While in an active RStudio session, simply run the following line of code in the Console.
+
+```r
+rm(list=ls())
+  #https://ycl6.github.io/GO-Enrichment-Analysis-Demo/4_enrichR.html
+  p_dat = read.csv('/home/starjjbang/Deep_drug/5_GSEA/protein_data.txt',sep='\t')
+  p_dat1 = p_dat[which(p_dat$pfdr < 0.05),]
+```
+
 #### Clone this template
 
 * Clone this repository:
