@@ -1,7 +1,22 @@
-rm(list=ls())
-#https://ycl6.github.io/GO-Enrichment-Analysis-Demo/4_enrichR.html
-p_dat = read.csv('/home/starjjbang/Deep_drug/5_GSEA/protein_data.txt',sep='\t')
-p_dat1 = p_dat[which(p_dat$pfdr < 0.05),]
+#### Clone this template
+
+* Clone this repository:
+
+  ```bash
+  rm(list=ls())
+  #https://ycl6.github.io/GO-Enrichment-Analysis-Demo/4_enrichR.html
+  p_dat = read.csv('/home/starjjbang/Deep_drug/5_GSEA/protein_data.txt',sep='\t')
+  p_dat1 = p_dat[which(p_dat$pfdr < 0.05),]
+  ```
+
+* Run the initializer script:
+
+  ```bash
+  ./init.sh
+  ```
+
+
+
 
 g_dat = read.csv('/home/starjjbang/Deep_drug/1_data/10_drug_score/gene_score_t_test.txt',sep='\t')
 g_dat1 = g_dat[which(g_dat$p.value< 0.05),]
